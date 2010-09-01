@@ -12,7 +12,7 @@ Christopher Schmitt [@teleject](http://twitter.com/teleject)
 
 ## How To Play ##
 
-* Connect to http://dreadno.de
+* Connect to http://dreadnode.com
 * Select a username.
 * Join or create a team.
 * Press start.
