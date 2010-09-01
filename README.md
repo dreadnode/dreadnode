@@ -14,7 +14,6 @@ Christopher Schmitt [@teleject](http://twitter.com/teleject)
 
 * Connect to http://dreadnode.com
 * Select a username.
-* Join or create a team.
 * Press start.
 * DESTROY!
 
