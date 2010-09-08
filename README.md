@@ -39,6 +39,6 @@ Since all your opponents may overlap and occupy the same grid locations, a hit c
 - "Computer" players
 - Scoring/Leaderboard
 
-### Licence ###
+## Licence ##
 
 MIT
