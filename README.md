@@ -39,6 +39,11 @@ Since all your opponents may overlap and occupy the same grid locations, a hit c
 - "Computer" players
 - Scoring/Leaderboard
 
+## Dependencies ##
+
+npm install express socket.io expresso
+
+
 ## Licence ##
 
 MIT

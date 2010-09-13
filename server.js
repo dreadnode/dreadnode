@@ -1,14 +1,33 @@
+/**
+ * Dreadnode server.
+ */
+
+/*-----------------------------------------------
+  Dependencies
+-----------------------------------------------*/
+
 var sys       = require("sys"),
     crypto    = require("crypto"),
     // npm dependencies
     connect   = require("connect"),
     express   = require("express"),
-    io        = require("socket.io"),
+    socket_io = require("socket.io"),
     // local
-    gm        = require(__dirname+"/lib/gamemanager");
+    gm        = require(__dirname + "/lib/gamemanager");
 
-var dreadnode = express.createServer(),
-    port      = parseInt(process.env.PORT) || 80;
+
+/*-----------------------------------------------
+  Configuration
+-----------------------------------------------*/
+
+var port      = parseInt(process.env.PORT) || 80;
+
+
+/*-----------------------------------------------
+  Express Server
+-----------------------------------------------*/
+
+var dreadnode = express.createServer();
 
 // Express Configuration
 dreadnode.configure(function() {
@@ -28,6 +47,11 @@ dreadnode.get("/game", function(req, res) {
   });
 });
 
+
+/*-----------------------------------------------
+  Game Server
+-----------------------------------------------*/
+
 // Game Manager
 var manager = gm.createGameManager();
 
@@ -44,11 +68,11 @@ var messenger = {
   }
 };
 
+// Message Dispatch Socket.IO / Web Sockets.
 var dispatch = {
   chat : function() {
     response.msg = "Received your chat message";
   },
-
   username : function(client, message) {
     if(message.msg === "no") {
       response.type = "no";
@@ -68,15 +92,12 @@ var dispatch = {
     }
     client.send(JSON.stringify(response));
   },
-
   ready : function(client, message) {
     manager.placeShips(client, message.msg);
   },
-
   shot : function(client, message) {
     manager.fireShot(client, message.msg);
   },
-
   gravatar : function(client, message) {
     response.type = "gravatar";
     response.status = "success";
@@ -85,8 +106,12 @@ var dispatch = {
   }
 };
 
-// Socket.IO
-var io = io.listen(dreadnode);
+
+/*-----------------------------------------------
+  Socket.IO Server
+-----------------------------------------------*/
+
+var io = socket_io.listen(dreadnode);
 io.on("connection", function(client) {
   console.log("Socket.IO Client Connected");
   //client.broadcast("New user connected. Welcome.");
@@ -116,6 +141,11 @@ io.on("connection", function(client) {
     client.send(JSON.stringify(userlist));
   });
 });
+
+
+/*-----------------------------------------------
+  Start the Server
+-----------------------------------------------*/
 
 dreadnode.listen(port);
 console.log("Dreadnode server listening on :"+port);
